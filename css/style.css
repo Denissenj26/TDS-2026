@@ -1,0 +1,125 @@
+/* =========================================================================
+   ESTILOS BASE COMPARTIDOS (index.html y about.html)
+   ========================================================================= */
+
+:root {
+  /* Color de fondo general: rosado blanquito aún más claro para que resalte el amarillo y los colores suaves */
+  --bg-color: #fbf6fb;
+  /* Tipografía sin serif compartida por toda la web */
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: #0f172a;
+  font-family: var(--font-main);
+}
+
+/* En index.html evitamos el scroll de página completa para navegar por pantallas */
+body.slides-mode {
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Contenedores blancos con borde sutil */
+.wireframe-box {
+  border: 1px solid #d8bfd6;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* Transición entre las 3 pantallas de index.html */
+.slide-screen {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.slide-screen.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* El lienzo donde se dibujan los círculos ocupa todo su contenedor */
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================================================================
+   ESTILOS PERSONALIZADOS PARA EL SLIDER CONTINUO (PANTALLA 03)
+   Asegura arrastre fluido, visibilidad del botón y compatibilidad total
+   ========================================================================= */
+#s3-territory-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #e8dbe6;
+  border-radius: 9999px;
+  outline: none;
+  cursor: grab;
+  touch-action: none;
+  margin: 0;
+  padding: 0;
+}
+
+#s3-territory-slider:active {
+  cursor: grabbing;
+}
+
+/* Botón deslizador (thumb) en Chrome, Safari, Edge, Blink */
+#s3-territory-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
+  cursor: grab;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+#s3-territory-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #e24a5b;
+}
+
+#s3-territory-slider:active::-webkit-slider-thumb {
+  transform: scale(1.22);
+  background: #e24a5b;
+  cursor: grabbing;
+}
+
+/* Botón deslizador (thumb) en Firefox */
+#s3-territory-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
+  cursor: grab;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+#s3-territory-slider::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  background: #e24a5b;
+}
+
+#s3-territory-slider:active::-moz-range-thumb {
+  transform: scale(1.22);
+  background: #e24a5b;
+  cursor: grabbing;
+}
+
+#s3-territory-slider::-moz-range-track {
+  height: 8px;
+  background: #e8dbe6;
+  border-radius: 9999px;
+}
