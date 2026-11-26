@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Plaza como Punto de Encuentro Ciudadano</title>
+
+  <!-- Tailwind CSS (utilidades de diseño rápido) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            wire: {
+              bg: '#fbf6fb',       /* Rosado blanquito más claro y luminoso */
+              panel: '#ffffff',
+              card: '#fdf9fd',
+              border: '#e8dbe6',
+              ink: '#0f172a',
+              muted: '#475569',
+              accent: '#e24a5b',
+              coral: '#e24a5b',
+              amber: '#f28e4b',
+              emerald: '#62b07c',
+              violet: '#9f82c4'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Tipografía sin serif de Google Fonts (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Hoja de estilos compartida -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Lógica e interacciones compartidas -->
+  <script src="js/script.js" defer></script>
+</head>
+<body class="slides-mode h-screen w-screen relative overflow-hidden">
+
+  <!-- ===================================================================
+       LIENZO DE CÍRCULOS SUELTOS Y TRANSICIÓN ZOOM (PANTALLA 01 <-> 02)
+       =================================================================== -->
+  <canvas id="ambient-circles-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 transition-opacity duration-500"></canvas>
+
+  <!-- ===================================================================
+       BARRA SUPERIOR FIJA (oculta en Pantalla 01; visible desde Pantalla 02)
+       =================================================================== -->
+  <header id="global-header" class="fixed top-0 left-0 right-0 h-16 px-10 border-b border-wire-border/70 bg-wire-bg/85 backdrop-blur flex items-center justify-between z-40 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="flex items-center gap-3">
+      <span class="w-2 h-2 rounded-full bg-wire-ink"></span>
+      <span class="text-xs font-semibold tracking-wider uppercase text-wire-ink">
+        La Plaza como Punto de Encuentro Ciudadano
+      </span>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <a href="about.html" class="text-xs text-wire-muted hover:text-wire-ink transition">
+        Propósito y Diseño
+      </a>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       NAVEGACIÓN LATERAL DERECHA (solo círculos; el texto aparece al pasar el cursor)
+       =================================================================== -->
+  <nav id="side-nav" aria-label="Navegación de pantallas" class="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-3 opacity-0 pointer-events-none transition-opacity duration-300">
+    <button onclick="goToScreen(1)" class="side-nav-btn group flex items-center gap-2.5 cursor-pointer" data-screen="1" aria-label="Inicio">
+      <span class="text-[11px] text-wire-muted bg-wire-panel/90 border border-wire-border px-2.5 py-0.5 rounded-full shadow-xs opacity-0 translate-x-1 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">Inicio</span>
+      <span class="w-7 h-7 rounded-full border border-wire-ink bg-wire-ink text-white text-[11px] font-semibold flex items-center justify-center transition">01</span>
+    </button>
+    <button onclick="goToScreen(2)" class="side-nav-btn group flex items-center gap-2.5 cursor-pointer" data-screen="2" aria-label="Contexto">
+      <span class="text-[11px] text-wire-muted bg-wire-panel/90 border border-wire-border px-2.5 py-0.5 rounded-full shadow-xs opacity-0 translate-x-1 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">Contexto</span>
+      <span class="w-7 h-7 rounded-full border border-wire-border bg-wire-panel text-wire-muted group-hover:text-wire-ink group-hover:border-wire-ink text-[11px] flex items-center justify-center transition">02</span>
+    </button>
+    <button onclick="goToScreen(3)" class="side-nav-btn group flex items-center gap-2.5 cursor-pointer" data-screen="3" aria-label="Transeúntes">
+      <span class="text-[11px] text-wire-muted bg-wire-panel/90 border border-wire-border px-2.5 py-0.5 rounded-full shadow-xs opacity-0 translate-x-1 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">Transeúntes</span>
+      <span class="w-7 h-7 rounded-full border border-wire-border bg-wire-panel text-wire-muted group-hover:text-wire-ink group-hover:border-wire-ink text-[11px] flex items-center justify-center transition">03</span>
+    </button>
+  </nav>
+
+  <!-- ===================================================================
+       ESCENARIO PRINCIPAL (3 PANTALLAS)
+       =================================================================== -->
+  <main id="main-stage" class="relative z-10 w-full h-full flex items-center justify-center overflow-hidden">
+
+    <!-- PANTALLA 01: PORTADA -->
+    <section id="screen-1" class="slide-screen active w-full h-full flex-col items-center justify-center relative">
+      <!-- Texto central de la portada (no clickeable) -->
+      <div class="relative z-10 text-center max-w-5xl px-6 space-y-4 pointer-events-none">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-wire-ink leading-[1.08]">
+          LA PLAZA COMO PUNTO DE<br />ENCUENTRO CIUDADANO
+        </h1>
+        <p class="text-base sm:text-xl font-semibold text-wire-ink/90 tracking-tight">
+          Comparativa entre Valparaíso y Buenos Aires
+        </p>
+      </div>
+
+      <!-- Única interacción clickeable en la portada: flecha inferior hacia la Pantalla 02 -->
+      <button
+        id="cover-next-btn"
+        type="button"
+        onclick="goToScreen(2)"
+        aria-label="Ir a la pantalla 2"
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 p-3 text-wire-ink/85 hover:text-wire-ink hover:translate-y-1 transition cursor-pointer"
+      >
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 6l5 5 5-5M7 13l5 5 5-5" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- PANTALLA 02: INTRODUCCIÓN AL CONTEXTO DE LOS DATOS (MASA DE PARTÍCULAS) -->
+    <section id="screen-2" class="slide-screen w-full h-full max-w-[1440px] flex-col justify-between pb-12">
+      <div class="max-w-2xl mx-auto space-y-1.5 text-center pt-1 shrink-0">
+        <span class="text-[10px] tracking-widest uppercase text-wire-accent font-bold">02 // Contexto</span>
+        <h2 class="text-base sm:text-lg md:text-xl font-bold tracking-tight text-wire-ink leading-snug">
+          Cada persona transita el espacio público bajo un propósito y una percepción diferente hacia las dificultades que se pueden presentar.
+        </h2>
+        <p class="text-xs sm:text-[13px] text-wire-muted font-normal leading-relaxed">
+          A partir del levantamiento de datos en terreno de los flujos en la <span class="text-wire-ink font-semibold">Plaza Sotomayor (Valparaíso)</span> y su comparativa en la <span class="text-wire-ink font-semibold">Plaza de Mayo (Buenos Aires)</span>, la investigación demuestra que el espacio público no es neutro, evidenciando que la experiencia peatonal responden a patrones que afectan a diferentes grupos de transeúntes.
+        </p>
+      </div>
+
+      <!-- Visualización Masa de Partículas Comparativa con separación equilibrada -->
+      <div id="s2-masses-wrapper" class="relative flex-1 w-full min-h-[300px] mt-4 mb-4">
+        <canvas id="context-masses-canvas" class="w-full h-full"></canvas>
+
+        <!-- Tooltip interactivo al interactuar con cada círculo -->
+        <div id="s2-hover-tooltip" class="hidden absolute min-w-[240px] max-w-[310px] bg-white/95 text-wire-ink border border-wire-border p-3.5 rounded-2xl shadow-xl pointer-events-none z-30 text-xs leading-relaxed backdrop-blur transition-all duration-150">
+          <div class="flex items-center pb-2 mb-2 border-b border-wire-border/60">
+            <span id="s2-tip-badge" class="font-bold text-[11px] px-2.5 py-0.5 rounded-full text-white"></span>
+          </div>
+          <div id="s2-tip-title" class="font-bold text-sm mb-1 text-wire-ink"></div>
+          <div id="s2-tip-desc" class="text-xs text-wire-muted mb-2.5 leading-relaxed"></div>
+          <div id="s2-tip-stats" class="text-[11px] bg-wire-card/80 p-2.5 rounded-xl space-y-1.5"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANTALLA 03: DATOS RECOPILADOS (PERFILES Y MOTIVOS A PANTALLA COMPLETA) -->
+    <section id="screen-3" class="slide-screen w-full h-full max-w-[1620px] flex-col justify-between relative pb-4">
+      <!-- Encabezado centrado limpio -->
+      <div class="max-w-3xl mx-auto text-center pt-1 shrink-0 space-y-1">
+        <span class="text-[10px] tracking-widest uppercase text-wire-accent font-bold">03 // Perfiles</span>
+        <h2 class="text-base sm:text-lg md:text-xl font-bold tracking-tight text-wire-ink">
+          Densidad de Perfiles y Conexiones de Uso
+        </h2>
+      </div>
+
+      <!-- Lienzo a pantalla completa para las constelaciones -->
+      <div class="relative flex-1 w-full min-h-[280px] md:min-h-[340px] my-1">
+        <canvas id="constellation-canvas" class="w-full h-full cursor-pointer"></canvas>
+
+        <!-- Panel flotante completo con scroll interno si es necesario para evitar cortes -->
+        <div id="s3-detail-modal" class="hidden absolute top-2 right-4 w-[330px] max-w-[90vw] max-h-[85vh] overflow-y-auto bg-white/95 border border-wire-border rounded-3xl p-5 shadow-2xl backdrop-blur z-30 transition-all duration-300">
+          <div class="flex items-center justify-between pb-2.5 border-b border-wire-border/50">
+            <span id="s3-pct-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-wire-card text-wire-ink">32%</span>
+            <button onclick="closeS3DetailModal()" class="w-6 h-6 rounded-full bg-wire-card hover:bg-wire-border/60 text-wire-ink flex items-center justify-center text-xs font-bold cursor-pointer transition">✕</button>
+          </div>
+
+          <div class="mt-3.5 flex items-center gap-3">
+            <span id="s3-color-dot" class="w-4 h-4 rounded-full bg-wire-accent"></span>
+            <h3 id="s3-title" class="text-lg font-bold text-wire-ink">Estudiante</h3>
+          </div>
+          <p id="s3-desc" class="text-xs text-wire-muted mt-1.5 leading-relaxed">
+            Desplazamiento diario hacia centros de estudio y combinación con locomoción colectiva.
+          </p>
+
+          <!-- Motivo del Recorrido -->
+          <div class="mt-4">
+            <span class="text-[10px] uppercase tracking-wider text-wire-muted font-bold block mb-2">Motivo del Recorrido</span>
+            <div id="s3-motives-list" class="space-y-2">
+              <!-- Se genera dinámicamente -->
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-wire-border/50 space-y-1.5">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-wire-muted">Ritmo:</span>
+              <span id="s3-speed" class="font-semibold text-wire-ink">Rápido</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-wire-muted whitespace-nowrap">Mayor dificultad:</span>
+              <span id="s3-top-diff" class="font-semibold text-wire-coral ml-2 text-right">Dificultad para cruzar las calles</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra deslizadora / Slider continuo elevado holgadamente por encima de la flecha con z-index alto -->
+      <div class="w-full flex justify-center items-center mb-8 z-50 relative pointer-events-auto select-none">
+        <div class="inline-flex flex-col items-center bg-white/95 backdrop-blur-md px-6 py-2.5 rounded-2xl border border-wire-border shadow-md">
+          <div class="flex items-center justify-between w-[310px] sm:w-[350px] text-[11px] font-bold text-wire-muted mb-1.5 px-1 select-none">
+            <span id="slider-label-chile" class="cursor-pointer transition text-wire-ink font-bold" onclick="setScreen3Slider(0)">Chile (Valparaíso)</span>
+            <span id="slider-label-ambos" class="cursor-pointer transition hover:text-wire-ink text-[10px] uppercase tracking-wider" onclick="setScreen3Slider(50)">Comparativa (Promedio)</span>
+            <span id="slider-label-arg" class="cursor-pointer transition hover:text-wire-ink" onclick="setScreen3Slider(100)">Argentina (Bs. As.)</span>
+          </div>
+          <div class="relative w-[310px] sm:w-[350px] flex items-center">
+            <input
+              id="s3-territory-slider"
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value="0"
+              oninput="onScreen3SliderChange(this.value)"
+              onchange="onScreen3SliderChange(this.value)"
+              class="w-full cursor-pointer focus:outline-none"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+       PIE DE PÁGINA FIJO (oculto en Pantalla 01; misma flecha doble centrada)
+       Mantiene pointer-events-none en el contenedor para que nunca bloquee la barra
+       =================================================================== -->
+  <footer id="global-footer" class="fixed bottom-0 left-0 right-0 h-14 px-10 flex items-center justify-center z-40 opacity-0 pointer-events-none transition-opacity duration-300">
+    <button onclick="nextScreen()" aria-label="Siguiente pantalla" class="p-3 text-wire-ink/85 hover:text-wire-ink hover:translate-y-1 transition cursor-pointer pointer-events-auto">
+      <svg id="footer-arrow-icon" class="w-7 h-7 transition-transform duration-300 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 6l5 5 5-5M7 13l5 5 5-5" />
+      </svg>
+    </button>
+  </footer>
+
+</body>
+</html>
